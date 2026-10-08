@@ -218,3 +218,25 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# =========================================================
+# Reglas personalizadas para Proyecto-Rl (Sinergym / EnergyPlus)
+# =========================================================
+
+# Carpetas de trabajo (se sube la carpeta, pero se ignora el contenido pesado)
+models/*
+!models/.gitkeep
+
+tensorboard_logs/*
+!tensorboard_logs/.gitkeep
+
+data/*
+!data/.gitkeep
+
+# Carpetas y archivos de salida generados por EnergyPlus y Sinergym
+Eplus-5zone-*/
+Eplus-env-*/
+outputs/
+*.log
+*.csv
+.lock
