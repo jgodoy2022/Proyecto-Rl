@@ -14,7 +14,7 @@ Proyecto de Aprendizaje por Refuerzo para la optimización y control de sistemas
 Tener instalado en tu computadora:
 
 1. **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**
-2. **[Git](https://git-scm.com/)
+2. **[Git](https://git-scm.com/)**
 
 ---
 
