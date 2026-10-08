@@ -9,7 +9,7 @@ Proyecto de Aprendizaje por Refuerzo para la optimización y control de sistemas
 * Joaquín Godoy
 * Gabriela Zambrano
 
-## ⚙️ Requisitos Previos
+## Requisitos Previos
 
 Tener instalado en tu computadora:
 
