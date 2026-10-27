@@ -44,3 +44,12 @@ docker run -it -p 6006:6006 -v $(pwd):/workspace -w /workspace sailugr/sinergym:
 ```bash
 pip install tensorboard
 ```
+
+### RECOMENDACIONES
+
+Debe estar abierto el contenedor para poder visualizar los gráficos en tensorBoard
+
+usando el siguiente link en tu navegador (yo utilicé, Opera GX)
+```
+http://localhost:6006
+```
