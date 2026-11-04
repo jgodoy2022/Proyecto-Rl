@@ -16,7 +16,7 @@ CUSTOM_AGENTS = {
     "custom_ppo": ("custom_ppo", "CustomPPO"),
     "custom_a2c": ("custom_a2c", "CustomA2C"), 
 }
-SB3_ALGOS = {"sb3_ppo": "ppo", "sb3_a2c": "a2c", "sb3_sac": "sac"}
+SB3_ALGOS = {"sb3_ppo": "ppo", "sb3_a2c": "a2c"}
 
 AGENT_CHOICES = sorted(list(CUSTOM_AGENTS) + list(SB3_ALGOS))
 

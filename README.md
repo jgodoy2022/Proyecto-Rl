@@ -22,7 +22,7 @@ Tener instalado en tu computadora:
 
 ### Paso 1: Clonar el Repositorio
 ```bash
-git clone [https://github.com/TU_USUARIO/Proyecto-Rl.git]
+git clone [https://github.com/jgodoy2022/Proyecto-Rl.git]
 cd Proyecto-Rl
 ```
 
