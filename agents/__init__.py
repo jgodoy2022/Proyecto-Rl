@@ -69,6 +69,9 @@ def build_agent(name, env, device="cpu", seed=None, tensorboard_log=None, **hp):
         kwargs["mini_batch_size"] = hp.get("mini_batch_size", 64)
         if "lr" in hp:
             kwargs["lr_actor"] = hp["lr"]
+    if name == "custom_a2c" and "lr" in hp:
+        kwargs["lr"] = hp["lr"]
+    return cls(state_dim, action_dim, **kwargs)
     return cls(state_dim, action_dim, **kwargs)
 
 
