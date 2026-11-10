@@ -53,3 +53,12 @@ usando el siguiente link en tu navegador (yo utilicé, Opera GX)
 ```
 http://localhost:6006
 ```
+
+### GRAFICAR
+```bash
+python plot_metrics.py "nombrecarpeta" --freq W
+```
+
+```bash
+python plot_metrics.py "nombrecarpeta" --freq D
+```
