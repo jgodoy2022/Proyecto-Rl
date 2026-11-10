@@ -29,7 +29,7 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
     fig, axes = plt.subplots(2, 3, figsize=(18, 10))
     freq_label = "Semana" if freq == "W" else "Día"
     fig.suptitle(
-        f"Análisis Métricas (Promedio por {freq_label}): {run_folder}",
+        f"Análisis Métricas",
         fontsize=16,
         fontweight="bold",
         y=0.98,
@@ -40,7 +40,7 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
     lw = 1.0  # grosor de la línea (linewidth)
 
     # -------------------------------------------------------------
-    # 1. FILA SUPERIOR: MÉTRICAS POR STEP AGRUPADAS
+    # 1. FILA SUPERIOR: MÉTRICAS PROMEDIADAS (Por Semana/Día)
     # -------------------------------------------------------------
     if step_csv.exists():
         print(f"📈 Leyendo steps desde: {step_csv}")
@@ -51,7 +51,7 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
         df_resampled = df_step.groupby(df_step.index // window_size).mean()
         x_step = df_resampled.index
 
-        # (1.1) Recompensa Media por Periodo
+        # (1.1) Recompensa Promedio por Periodo
         if "reward" in df_resampled.columns:
             axes[0, 0].plot(
                 x_step,
@@ -63,12 +63,12 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
                 alpha=0.85,
                 label=f"Recompensa ({freq_label})",
             )
-            axes[0, 0].set_title("Recompensa Promedio por Semana", pad=8)
-            axes[0, 0].set_xlabel("Semanas Transcurridas", labelpad=6)
+            axes[0, 0].set_title(f"Recompensa Promedio por {freq_label}", pad=8)
+            axes[0, 0].set_xlabel(f"{freq_label}s Transcurridas", labelpad=6)
             axes[0, 0].set_ylabel("Recompensa Promedio")
             axes[0, 0].legend(loc="lower right", fontsize=9)
 
-        # (1.2) Potencia Promedio (W) por Periodo
+        # (1.2) Consumo Energético Promedio (Potencia W) por Periodo
         if "power_w" in df_resampled.columns:
             axes[0, 1].plot(
                 x_step,
@@ -80,8 +80,10 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
                 alpha=0.85,
                 label=f"Potencia W ({freq_label})",
             )
-            axes[0, 1].set_title("Potencia Térmica Promedio por Semana", pad=8)
-            axes[0, 1].set_xlabel("Semanas Transcurridas", labelpad=6)
+            axes[0, 1].set_title(
+                f"Consumo Energético Promedio por {freq_label}", pad=8
+            )
+            axes[0, 1].set_xlabel(f"{freq_label}s Transcurridas", labelpad=6)
             axes[0, 1].set_ylabel("Watts (W)")
             axes[0, 1].legend(loc="upper right", fontsize=9)
 
@@ -98,20 +100,21 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
                 label=f"Violación °C ({freq_label})",
             )
             axes[0, 2].set_title(
-                "Incomodidad Térmica Promedio por Semana", pad=8
+                f"Incomodidad Térmica Promedio por {freq_label}", pad=8
             )
-            axes[0, 2].set_xlabel("Semanas Transcurridas", labelpad=6)
+            axes[0, 2].set_xlabel(f"{freq_label}s Transcurridas", labelpad=6)
             axes[0, 2].set_ylabel("Desviación (°C)")
             axes[0, 2].legend(loc="upper right", fontsize=9)
 
     # -------------------------------------------------------------
-    # 2. FILA INFERIOR: MÉTRICAS POR EPISODIO
+    # 2. FILA INFERIOR: MÉTRICAS TOTALES POR EPISODIO (Por Año)
     # -------------------------------------------------------------
     if ep_csv.exists():
         print(f"📊 Leyendo episodios desde: {ep_csv}")
         df_ep = pd.read_csv(ep_csv)
         x_ep = df_ep["episode"] if "episode" in df_ep.columns else df_ep.index
 
+        # (2.1) Recompensa Total por Episodio (Retorno)
         if "return" in df_ep.columns:
             axes[1, 0].plot(
                 x_ep,
@@ -120,13 +123,14 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
                 markersize=5,
                 linewidth=1.8,
                 color="tab:green",
-                label="Retorno Total",
+                label="Recompensa Total",
             )
-            axes[1, 0].set_title("Retorno por Episodio", pad=8)
+            axes[1, 0].set_title("Recompensa Total por Episodio", pad=8)
             axes[1, 0].set_xlabel("Episodio (Año)", labelpad=6)
-            axes[1, 0].set_ylabel("Recompensa")
+            axes[1, 0].set_ylabel("Recompensa Acumulada")
             axes[1, 0].legend(fontsize=9)
 
+        # (2.2) Consumo Energético Total por Episodio (kWh)
         if "energy_kwh" in df_ep.columns:
             axes[1, 1].plot(
                 x_ep,
@@ -137,11 +141,12 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
                 color="tab:red",
                 label="Energía Año (kWh)",
             )
-            axes[1, 1].set_title("Consumo Energético por Episodio", pad=8)
+            axes[1, 1].set_title("Consumo Energético Total por Episodio", pad=8)
             axes[1, 1].set_xlabel("Episodio (Año)", labelpad=6)
             axes[1, 1].set_ylabel("kWh / Episodio")
             axes[1, 1].legend(fontsize=9)
 
+        # (2.3) Incomodidad Térmica Total por Episodio (°C·h)
         if "violation_degC_h" in df_ep.columns:
             axes[1, 2].plot(
                 x_ep,
@@ -152,7 +157,9 @@ def plot_run_metrics(run_folder, runs_dir="runs", freq="W"):
                 color="tab:purple",
                 label="Violación Año (°C·h)",
             )
-            axes[1, 2].set_title("Incomodidad Térmica por Episodio", pad=8)
+            axes[1, 2].set_title(
+                "Incomodidad Térmica Total por Episodio", pad=8
+            )
             axes[1, 2].set_xlabel("Episodio (Año)", labelpad=6)
             axes[1, 2].set_ylabel("°C·h / Episodio")
             axes[1, 2].legend(fontsize=9)
